@@ -60,7 +60,7 @@ def build_model():
     ])
 
     parameters = {'multiclf__estimator__n_estimators': [10,150],
-              'multiclf__estimator__max_depth': [30,60]}
+                  'multiclf__estimator__max_depth': [30,60]}
 
     model = GridSearchCV(pipeline, parameters, cv=5)
 
@@ -87,7 +87,7 @@ def save_model(model, model_filepath):
     :param model_filepath: fil path to store the model
     :return:
     '''
-    with open(model_filepath+'trained_model.pkl', 'wb') as file:
+    with open(model_filepath, 'wb') as file:
         pickle.dump(model, file)
     pass
 
@@ -98,13 +98,13 @@ def main():
         print('Loading data...\n    DATABASE: {}'.format(database_filepath))
         X, Y, category_names = load_data(database_filepath)
         X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2)
-        
+
         print('Building model...')
         model = build_model()
-        
+
         print('Training model...')
         model.fit(X_train, Y_train)
-        
+
         print('Evaluating model...')
         evaluate_model(model, X_test, Y_test, category_names)
 
@@ -114,13 +114,11 @@ def main():
         print('Trained model saved!')
 
     else:
-        print('Please provide the filepath of the disaster messages database '\
-              'as the first argument and the filepath of the pickle file to '\
-              'save the model to as the second argument. \n\nExample: python '\
+        print('Please provide the filepath of the disaster messages database ' \
+              'as the first argument and the filepath of the pickle file to ' \
+              'save the model to as the second argument. \n\nExample: python ' \
               'train_classifier.py ../data/DisasterResponse.db classifier.pkl')
 
 
 if __name__ == '__main__':
     main()
-
-
